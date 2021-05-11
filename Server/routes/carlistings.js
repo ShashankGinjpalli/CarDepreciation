@@ -7,9 +7,9 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try{
         const listings = await carData.find({
-            "make": req.body.make,
+            "make": {'$regex': req.body.make, '$options': 'i'},
             "title": {'$regex': req.body.title, '$options': 'i'},
-            "year": req.body.year
+            "year": {'$regex': req.body.year, '$options': 'i'}
     });
         res.json(listings);
     } catch(err){
@@ -27,7 +27,8 @@ router.post('/', async (req, res) => {
         price: req.body.price,
         mileage: req.body.mileage,
         condition: req.body.condition,
-        specifications: req.body.specifications
+        specifications: req.body.specifications,
+        zipCode: req.body.zipCode
     });
 
     try{

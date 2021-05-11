@@ -28,6 +28,10 @@ const carDataScheme = mongoose.Schema({
     specifications: {
         type: String,
         required: true
+    },
+    zipCode: {
+        type: String,
+        required: true
     }
 })
 
