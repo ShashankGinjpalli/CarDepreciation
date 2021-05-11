@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose')
 
 const carDataScheme = mongoose.Schema({
@@ -30,9 +31,9 @@ const carDataScheme = mongoose.Schema({
         required: true
     },
     zipcode: {
-        type: String,
+        type: Number,
         required: true
     }
 })
 
-module.exports = mongoose.model('CarData', carDataScheme)
+module.exports = mongoose.model('listings_collection', carDataScheme)

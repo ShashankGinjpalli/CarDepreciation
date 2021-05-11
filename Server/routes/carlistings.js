@@ -11,6 +11,7 @@ router.get('/', async (req, res) => {
             "title": {'$regex': req.body.title, '$options': 'i'},
             "year": {'$regex': req.body.year, '$options': 'i'}
     });
+        // const listings = await carData.find({})
         res.json(listings);
     } catch(err){
         res.json({err});
@@ -32,7 +33,7 @@ router.post('/', async (req, res) => {
     });
 
     try{
-        const savedListing = await listings.save();
+        const savedListing = await listing.save();
         res.json(savedListing)
     }catch(err){
         res.json(err)
