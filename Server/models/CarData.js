@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const carDataScheme = mongoose.Schema({
+    make:{
+        type: String, 
+        required: true
+    },
     title: {
         type: String,
         required: true
