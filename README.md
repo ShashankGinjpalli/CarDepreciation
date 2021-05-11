@@ -50,7 +50,7 @@ requestbody:
     "mileage": "String", 
     "condition": "String", 
     "specifications": "String",
-    "zipCode": "String"
+    "zipcode": "String"
 }
 `
 

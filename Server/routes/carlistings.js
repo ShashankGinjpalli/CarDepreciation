@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
         mileage: req.body.mileage,
         condition: req.body.condition,
         specifications: req.body.specifications,
-        zipCode: req.body.zipCode
+        zipcode: req.body.zipcode
     });
 
     try{
