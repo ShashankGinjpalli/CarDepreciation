@@ -35,7 +35,7 @@ requestbody:
     "year": "String"
 }
 `
-- Title does not need to match and in not case sensitive
+- Title does not need to match perfectly with database and is not case sensitive
 
 
 POST: `http://localhost:3000/carListings`
