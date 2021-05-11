@@ -26,8 +26,7 @@ paste: `DATABASE_URL=mongodb://localhost:27017/CarData`
 - `npm start` to start the server
 
 ### Application Routes: 
-
-GET: http://localhost:3000/carListings
+GET: `http://localhost:3000/carListings`
 requestbody:
 `
 {
@@ -36,7 +35,8 @@ requestbody:
     "year": "String"
 }
 `
-- Title does not need to match and in not case sensitive
+- Title does not need to match perfectly with database and is not case sensitive
+
 
 POST: `http://localhost:3000/carListings`
 
