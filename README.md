@@ -26,7 +26,7 @@ paste: `DATABASE_URL=mongodb://localhost:27017/CarData`
 - `npm start` to start the server
 
 ### Application Routes: 
-GET: `http://localhost:3000/carListings`
+__GET: `http://localhost:3000/carListings/specific`__
 requestbody:
 `
 {
@@ -35,7 +35,21 @@ requestbody:
     "year": "String"
 }
 `
-- Title does not need to match perfectly with database and is not case sensitive
+
+- gets cars of a specific make and model from the database
+
+
+__Get: `http://localhost:3000/carListings/all`__
+- Gets all of the listings from the database
+
+__Get: `http://localhost:3000/carListings/zip`__
+requestbody: 
+`
+{
+    zipcode: Number
+}
+`
+- gets the cars in the database that are in the zipcode
 
 
 POST: `http://localhost:3000/carListings`

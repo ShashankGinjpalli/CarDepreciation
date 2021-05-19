@@ -4,7 +4,7 @@ const carData = require('../models/CarData')
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/specific', async (req, res) => {
     try{
         const listings = await carData.find({
             "make": {'$regex': req.body.make, '$options': 'i'},
@@ -17,6 +17,41 @@ router.get('/', async (req, res) => {
         res.json({err});
     }
     
+})
+
+router.get('/all', async (req, res) => {
+    try{
+        const listings = await carData.find({});
+        res.json(listings);
+
+    }catch(err){
+        res.json({err});
+    }
+
+})
+
+router.get('/zip', async (req, res) => {
+    try{
+        const listings = await carData.find({
+            "zipcode": req.body.zipcode
+        });
+        res.json(listings);
+
+    }catch(err){
+        res.json({err});
+    }
+
+})
+
+router.get('/zip', async (req, res) => {
+    try{
+        const listings = await carData.find({});
+        res.json(listings);
+
+    }catch(err){
+        res.json({err});
+    }
+
 })
 
 router.post('/', async (req, res) => {
@@ -39,13 +74,6 @@ router.post('/', async (req, res) => {
         res.json(err)
     }
 
-    // listing.save()
-    //     .then(data => {
-    //         res.json(data);
-    //     })
-    //     .catch(err => {
-    //         res.json(err);
-    //     });
 });
 
 
