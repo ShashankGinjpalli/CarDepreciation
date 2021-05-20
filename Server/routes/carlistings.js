@@ -9,7 +9,8 @@ router.get('/specific', async (req, res) => {
         const listings = await carData.find({
             "make": {'$regex': req.body.make, '$options': 'i'},
             "title": {'$regex': req.body.title, '$options': 'i'},
-            "year": {'$regex': req.body.year, '$options': 'i'}
+            "year": {'$regex': req.body.year, '$options': 'i'},
+            "$or": [{"mileage": {$ne: null}}, {"price": {$ne: null}}]
     });
         // const listings = await carData.find({})
         res.json(listings);
@@ -21,19 +22,8 @@ router.get('/specific', async (req, res) => {
 
 router.get('/all', async (req, res) => {
     try{
-        const listings = await carData.find({});
-        res.json(listings);
-
-    }catch(err){
-        res.json({err});
-    }
-
-})
-
-router.get('/zip', async (req, res) => {
-    try{
         const listings = await carData.find({
-            "zipcode": req.body.zipcode
+            "$or": [{"mileage": {$ne: null}}, {"price": {$ne: null}}]
         });
         res.json(listings);
 
@@ -45,7 +35,10 @@ router.get('/zip', async (req, res) => {
 
 router.get('/zip', async (req, res) => {
     try{
-        const listings = await carData.find({});
+        const listings = await carData.find({
+            "zipcode": req.body.zipcode,
+            "$or": [{"mileage": {$ne: null}}, {"price": {$ne: null}}]
+        });
         res.json(listings);
 
     }catch(err){
@@ -53,6 +46,7 @@ router.get('/zip', async (req, res) => {
     }
 
 })
+
 
 router.post('/', async (req, res) => {
     console.log(req.body)
