@@ -29,15 +29,17 @@ def scrape_CarsdotCom(page_num, mk_index):
     mk_ids = dict((v, k) for k, v in make.items())
 
     model = {"Civic": 20823}
+    zipcode = 97208
 
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9'}
 
-    url = ('https://www.cars.com/for-sale/searchresults.action/?mkId={}&page={}&perPage=100&rd=50&searchSource=GN_BREADCRUMB&sort=relevance&stkTypId=28881&zc=95123').format(
-        make_ids[mk_index], page_num)
+    url = ('https://www.cars.com/for-sale/searchresults.action/?mkId={}&page={}&perPage=100&rd=50&searchSource=GN_BREADCRUMB&sort=relevance&stkTypId=28881&zc={}').format(
+        make_ids[mk_index], page_num,zipcode)
     print(url)
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.content, 'lxml')
+    #print(soup)
 
     # scrape listings
     listings = soup.find_all(
@@ -66,25 +68,37 @@ def scrape_CarsdotCom(page_num, mk_index):
             spec_string = li.get_text().strip()
             specs.append(li.get_text().strip(" "))
 
-        print(title)
+        #print(title)
         current_make = str(mk_ids[make_ids[mk_index]])
         title = title.replace(current_make, "")
-        print("Make: " + str(mk_ids[make_ids[mk_index]]))
+        #print("Make: " + str(mk_ids[make_ids[mk_index]]))
 
         car_listing = listing_class.listing_obj(current_make,
-                                                str(title), str(year), str(price), str(mileage), str(condition), str(specifications), datetime.now())
+                                                str(title), str(year), str(price), str(mileage), str(condition), str(specifications), datetime.now(), str(zipcode))
         db.upload_listing(car_listing)
 
     time.sleep(random.randint(0, 1))
     # pagination processing
     pagination = soup.find("a", {"class": "button next-page"})
-    if not pagination.has_attr('data-page'):
-        print("no next page")
-        time.sleep(random.randint(0, 1000))
-        scrape_CarsdotCom(0, mk_index+1)
-    else:
-        page_num += 1
-        scrape_CarsdotCom(page_num, mk_index)
+    try:
+        if not pagination.has_attr('data-page'):
+            print("no next page")
+            time.sleep(random.randint(0, 10))
+            scrape_CarsdotCom(0, mk_index+1)
+        else:
+            page_num += 1
+            scrape_CarsdotCom(page_num, mk_index)
+    except Exception as e:
+        print(e)
+        time.sleep(random.randint(0, 10))
+        try:
+            scrape_CarsdotCom(0, mk_index+1)
+        except Exception as e:
+            if isinstance(e, IndexError):
+                quit()
+            else:
+                print(e)
+
 
 
 scrape_CarsdotCom(1, 0)

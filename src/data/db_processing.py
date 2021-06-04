@@ -13,12 +13,12 @@ class databaseConnector:
     #db = client.business
 
     def upload_listing(self, listing_element):
-        print(listing_element)
+        #print(listing_element)
         try:
             #obj_dict = self.slotted_to_dict(listing_element)
             result = self.listings_collections.insert_one(
                 listing_element.to_dict())
-            print(result.inserted_id)
+            #print(result.inserted_id)
         except Exception as e:
             print("uhoh " + str(e))
 
