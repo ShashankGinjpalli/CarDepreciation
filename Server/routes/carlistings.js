@@ -20,6 +20,23 @@ router.get('/specific', async (req, res) => {
     
 })
 
+router.get('/getSpecificListing', async(req, res) =>{
+    try{
+        var queryParameter = req.query;
+        const listings = await carData.find({
+            "make": {'$regex': queryParameter.make, '$options': 'i'},
+            "title": {'$regex': queryParameter.title, '$options': 'i'},
+            "year": {'$regex': queryParameter.year, '$options': 'i'},
+            "zipcode": queryParameter.zipcode,
+            "$or": [{"mileage": {$ne: null}}, {"price": {$ne: null}}]
+        });
+        return res.json(listings);
+    }catch(err){
+        res.json({err});
+    }
+    
+})
+
 router.get('/all', async (req, res) => {
     try{
         const listings = await carData.find({
